@@ -1,0 +1,114 @@
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const pool = require("./db");
+
+//middleware
+app.use(cors());
+app.use(express.json()); //req.body
+const port = 3000;
+
+app.post('/insertData', async (req, res) => {
+  const { number } = req.body;
+  try {
+    const result = await pool.query('INSERT INTO testtable (number) VALUES ($1) RETURNING *', [number]);
+    console.log(`Data inserted with ID: ${result.rows[0].id}`);
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/getData', async (req, res) => {
+  try {
+    const data = await await pool.query('SELECT * FROM testtable');
+    data.rows.forEach(row => {
+      console.log(`Data number with value: ${row.number}`);
+    });
+    res.status(200).json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.delete('/deleteData/:number', async (req, res) => {
+  const number = req.params.number;
+
+  try {
+    const result = await pool.query('DELETE FROM testtable WHERE number = $1 RETURNING *', [number]);
+
+    if (result.rows.length > 0) {
+      console.log(`Data with number ${number} deleted successfully`);
+      res.status(200).json({ message: 'Data deleted successfully', deletedData: result.rows[0] });
+    } else {
+      console.log(`No data found with number ${number}`);
+      res.status(404).json({ error: 'Data not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+app.put('/updateData/:number', async (req, res) => {
+  const number = req.params.number;
+  const { newNumber } = req.body;
+
+  try {
+    const result = await pool.query('UPDATE testtable SET number = $1 WHERE number = $2 RETURNING *', [newNumber, number]);
+
+    if (result.rows.length > 0) {
+      console.log(`Data with number ${number} updated successfully`);
+      res.status(200).json({ message: 'Data updated successfully', updatedData: result.rows[0] });
+    } else {
+      console.log(`No data found with number ${number}`);
+      res.status(404).json({ error: 'Data not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // Import the pool and the connect_and_query function from the 'db.js' file
+// const { pool, connect_and_query } = require('./db');
+
+// // Define the integer value you want to insert
+// let integer_value = 20; // replace this with your actual value
+
+// // Insert the integer value into the 'testtable'
+// const insertTestTable = async () => {
+//  pool.query('INSERT INTO testtable (number) VALUES ($1)', [integer_value], (error, results) => {
+//   if (error) {
+//     throw error;
+//   }
+//   console.log(`Data inserted with ID: ${results.insertId}`);
+//  })
+// }
+
+// // insertTestTable();
+
+// connect_and_query()
+//  .then(data => console.log(data))
+//  .catch(err => console.log(err));
