@@ -1,0 +1,14 @@
+{
+    "name": "guhs",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "start": "npm run start:server & npm run start:client",
+      "start:server": "cd server && npm start",
+      "start:client": "cd client && npm start"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+  }

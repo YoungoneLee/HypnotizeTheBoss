@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const pool = require("./db");
+const { pool } = require("./db");
 
 //middleware
 app.use(cors());
+// app.use(cors({ origin: '*' }));
 app.use(express.json()); //req.body
 const port = 3000;
 
@@ -77,38 +78,3 @@ app.put('/updateData/:number', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Import the pool and the connect_and_query function from the 'db.js' file
-// const { pool, connect_and_query } = require('./db');
-
-// // Define the integer value you want to insert
-// let integer_value = 20; // replace this with your actual value
-
-// // Insert the integer value into the 'testtable'
-// const insertTestTable = async () => {
-//  pool.query('INSERT INTO testtable (number) VALUES ($1)', [integer_value], (error, results) => {
-//   if (error) {
-//     throw error;
-//   }
-//   console.log(`Data inserted with ID: ${results.insertId}`);
-//  })
-// }
-
-// // insertTestTable();
-
-// connect_and_query()
-//  .then(data => console.log(data))
-//  .catch(err => console.log(err));

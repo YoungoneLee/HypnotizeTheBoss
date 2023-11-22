@@ -8,7 +8,7 @@ const InputData = () => {
         e.preventDefault(); //prevents refreshing
         try {
             console.log("description: " + description.toString());
-            const body = {description} //value within the searchbar
+            const body = {number: description} //value within the searchbar
             
             const response = await fetch("http://localhost:3000/insertData", {
                 method: "POST", 
@@ -20,6 +20,7 @@ const InputData = () => {
             console.error(err.message)
         }
     }
+    
 
 
     return (
