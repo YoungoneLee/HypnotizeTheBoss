@@ -1,4 +1,3 @@
-
 import React, {Fragment, useState} from 'react';
 const InputData = () => {
 
@@ -25,7 +24,7 @@ const InputData = () => {
 
     return (
     <Fragment>
-        <h1 className = "text-center mt-5"> Input Data Hypnoboss</h1>
+        {/* <h1 className = "text-center mt-5"> Input Data Hypnoboss</h1> */}
         <form className="d-flex mt-5" onSubmit={onSubmitForm}> 
             <input 
                 types = "number" 
