@@ -21,8 +21,7 @@ const UserForm = () => {
     e.preventDefault();
 
     try {
-        const body = {vod : vodLink, runtime: runTime, categoryid: categoryId, gamename: gameName};
-
+        const body = { vod: vodLink, runtime: runTime, categoryID: categoryId, gameName: gameName };
         const response = await fetch("http://localhost:3000/insertRunData", {
             method: "POST", 
             headers: {"Content-Type": "application/json"},
