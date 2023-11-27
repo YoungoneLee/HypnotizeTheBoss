@@ -36,7 +36,6 @@ const ListTodos = () => {
     }, []);
 
 
-    // console.log(todos);
     return (
         <Fragment>
             <TableContainer component={Paper}>

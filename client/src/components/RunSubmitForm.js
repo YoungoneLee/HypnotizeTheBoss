@@ -7,10 +7,6 @@ import Paper from '@mui/material/Paper';
 import './RunSubmitForm.css'; // Import the CSS file
 
 const UserForm = () => {
-//   const [firstName, setFirstName] = useState('');
-//   const [lastName, setLastName] = useState('');
-//   const [birthday, setBirthday] = useState('');
-
     const [vodLink, setVodLink] = useState('');
     const [runTime, setRuntime] = useState('');
     const [categoryId, setCategoryId] = useState('');
@@ -33,8 +29,6 @@ const UserForm = () => {
     } catch (err) {
         console.error(err.message); 
     }
-    // console.log('User submitted:', { firstName, lastName, birthday });
-    // You can perform further actions with the user input here
   };
 
   return (
