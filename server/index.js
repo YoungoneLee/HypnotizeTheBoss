@@ -33,6 +33,31 @@ app.post('/insertRunData', async (req, res) => {
   }
 });
 
+app.post('/insertCategoryData', async (req, res) => {
+  const { extension, type } = req.body;
+  try {
+    const result = await pool.query('INSERT INTO category (extension, type) VALUES ($1, $2) RETURNING *', [extension, type]);
+    console.log(`Data inserted with CategoryID: ${result.rows[0].categoryID}`);
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.post('/insertGameData', async (req, res) => {
+  const { gameName, genre, releaseYear } = req.body;
+  try {
+    const result = await pool.query('INSERT INTO game (gameName, genre, releaseYear) VALUES ($1, $2, $3) RETURNING *', [gameName, genre, releaseYear]);
+    
+    console.log(`Data inserted for game: ${result.rows[0].gameName}`);
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 app.get('/getData', async (req, res) => {
   try {
