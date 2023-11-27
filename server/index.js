@@ -34,6 +34,23 @@ app.get('/getData', async (req, res) => {
   }
 });
 
+
+app.get('/getRunData', async (req, res) => {
+  console.log('GET request to /getRunData received');
+
+  try {
+    const data = await pool.query('SELECT * FROM run');
+    data.rows.forEach(row => {
+      console.log(`RunID: ${row.runid}, VOD: ${row.vod}, Runtime: ${row.runtime}, CategoryID: ${row.categoryid}, GameName: ${row.gamename}`);
+    });
+    res.status(200).json(data.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 app.delete('/deleteData/:number', async (req, res) => {
   const number = req.params.number;
 

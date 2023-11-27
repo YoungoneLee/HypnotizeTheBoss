@@ -1,11 +1,17 @@
 import React, { Fragment }  from 'react'
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
+//css
 import './App.css';
-import InputData from './components/InputData';
+
+//pages
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import NoPage from './pages/NoPage';
+
+//components
+import InputData from './components/InputData';
+import ListTodos from './components/ListData';
 
 
 function App() {
@@ -26,7 +32,8 @@ function App() {
       <div>
         <Fragment>
           <div className = "container"> 
-          <InputData/>
+          {/* <InputData/> */}
+          <ListTodos/>
           </div>
         </Fragment>
       </div>
