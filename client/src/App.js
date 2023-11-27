@@ -10,8 +10,9 @@ import Contact from './pages/Contact';
 import NoPage from './pages/NoPage';
 
 //components
-import InputData from './components/InputData';
-import ListTodos from './components/ListData';
+// import InputData from './components/InputData';
+// import ListTodos from './components/ListData';
+import UserForm from './components/RunSubmitForm';
 
 
 function App() {
@@ -32,14 +33,12 @@ function App() {
       <div>
         <Fragment>
           <div className = "container"> 
+          <UserForm/>
           {/* <InputData/> */}
-          <ListTodos/>
+          {/* <ListTodos/> */}
           </div>
         </Fragment>
       </div>
-
-
-
     </div>
   );
 }

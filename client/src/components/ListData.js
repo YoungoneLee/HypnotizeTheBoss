@@ -74,16 +74,3 @@ const ListTodos = () => {
 
 
 export default ListTodos;
-
-
-//not need unless data from database does not populate
-// function createRunSubmission(runId, vod, runTime, categoryID, gameName) {
-//     return { runId, vod, runTime, categoryID, gameName };
-// }
-
-//populate w random data NOT from database here
-// const rows = [
-//     createRunSubmission(111, "link here", "13 mins", 444, 777, "Super Luigi"),
-//     createRunSubmission(222, "link here", "12 mins", 555, 888, "Super Mario"),
-//     createRunSubmission(333, "link here", "11 mins", 666, 999, "Super Bowser"),
-// ]
