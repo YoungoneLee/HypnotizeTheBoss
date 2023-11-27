@@ -6,12 +6,13 @@ import './App.css';
 //pages
 import Home from './pages/Home';
 import About from './pages/About';
-import Contact from './pages/Contact';
+import RunSubmitPage from './pages/RunSubmitPage';
+import SearchResult from './pages/SearchResult';
 import NoPage from './pages/NoPage';
 
 //components
 // import InputData from './components/InputData';
-// import ListTodos from './components/ListData';
+// import ListGames from './components/ListData';
 import UserForm from './components/RunSubmitForm';
 
 
@@ -24,7 +25,8 @@ function App() {
         <Route index element={<Home />} /> 
         <Route path="/home" element={<Home/>}/>
         <Route path="/about" element={<About/>}/>
-        <Route path="/contact" element={<Contact/>}/>
+        <Route path="/submit" element={<RunSubmitPage/>}/>
+        <Route path="/searchResult" element={<SearchResult/>}/>
         <Route path="*" element={<NoPage/>}/>
       </Routes>
       </BrowserRouter>
@@ -33,9 +35,6 @@ function App() {
       <div>
         <Fragment>
           <div className = "container"> 
-          {/* <UserForm/> */}
-          {/* <InputData/> */}
-          {/* <ListTodos/> */}
           </div>
         </Fragment>
       </div>

@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-const ListTodos = () => {
+const ListGames = () => {
 
     const [todos, setTodos] = useState([]);
     
@@ -72,4 +72,4 @@ const ListTodos = () => {
 }
 
 
-export default ListTodos;
+export default ListGames;
