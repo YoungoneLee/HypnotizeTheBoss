@@ -21,6 +21,19 @@ app.post('/insertData', async (req, res) => {
   }
 });
 
+app.post('/insertRunData', async (req, res) => {
+  const { vod, runtime, categoryID, gameName } = req.body;
+  try {
+    const result = await pool.query('INSERT INTO run (vod, runtime, categoryID, gameName) VALUES ($1, $2, $3, $4) RETURNING *', [vod, runtime, categoryID, gameName]);
+    console.log(`Data inserted with RunID: ${result.rows[0].runID}`);
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 app.get('/getData', async (req, res) => {
   try {
     const data = await await pool.query('SELECT * FROM testtable');
