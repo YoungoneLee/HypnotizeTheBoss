@@ -1,6 +1,0 @@
-# Ignore Node.js modules in both client and server folders
-client/node_modules/
-server/node_modules/
-
-# Ignore environment-specific files in the server folder
-server/env/
