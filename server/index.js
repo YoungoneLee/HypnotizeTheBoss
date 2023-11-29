@@ -5,10 +5,11 @@ const { pool } = require("./db");
 
 //middleware
 app.use(cors());
-// app.use(cors({ origin: '*' }));
 app.use(express.json()); //req.body
 const port = 3000;
 
+
+//wen
 app.post('/insertData', async (req, res) => {
   const { number } = req.body;
   try {
@@ -21,6 +22,7 @@ app.post('/insertData', async (req, res) => {
   }
 });
 
+//wen
 app.post('/insertRunData', async (req, res) => {
   const { vod, runtime, categoryID, gameName } = req.body;
   try {
@@ -33,6 +35,7 @@ app.post('/insertRunData', async (req, res) => {
   }
 });
 
+//wen
 app.post('/insertCategoryData', async (req, res) => {
   const { extension, type } = req.body;
   try {
@@ -45,6 +48,7 @@ app.post('/insertCategoryData', async (req, res) => {
   }
 });
 
+//wen
 app.post('/insertGameData', async (req, res) => {
   const { gameName, genre, releaseYear } = req.body;
   try {
@@ -59,6 +63,7 @@ app.post('/insertGameData', async (req, res) => {
 });
 
 
+//leah
 //search for runs associated with a runner 
 //(i.e., with runs that have a runner username containing user input)
 //run = runner's username, game name, category name, run time, vod, submission date, submission time
@@ -84,6 +89,7 @@ app.get('/searchByRunner', async (req, res) => {
 //to test, need to do /searchByRunner?runner=runnername, can change to post so that it doesn't do this, but shouldn't be necessary
 
 
+//leah
 //search for runs associated with a a game name
 app.get('/searchByGame', async (req, res) => {
   const game = req.query.game;
@@ -106,6 +112,7 @@ app.get('/searchByGame', async (req, res) => {
 });
 
 
+//leah
 //search for runs associated with a category type
 app.get('/searchByCategory', async (req, res) => {
   const category = req.query.category;
@@ -127,6 +134,8 @@ app.get('/searchByCategory', async (req, res) => {
   }
 });
 
+
+//wen
 app.get('/getData', async (req, res) => {
   try {
     const data = await pool.query('SELECT * FROM testtable');
@@ -141,6 +150,7 @@ app.get('/getData', async (req, res) => {
 });
 
 
+//wen
 app.get('/getRunData', async (req, res) => {
   console.log('GET request to /getRunData received');
 
@@ -157,6 +167,33 @@ app.get('/getRunData', async (req, res) => {
 });
 
 
+//wen
+app.delete('/deleteRunData/:runid', async (req, res) => {
+const runid = req.params.runid;
+
+try {
+  const results1 = await pool.query('DELETE FROM run WHERE runid = $1 RETURNING *', [runid]);
+  const results2 = await pool.query('DELETE FROM submits WHERE runid = $1 RETURNING *', [runid]);
+
+  if ((results1.rows.length > 0) && (results2.rows.length > 0)) {
+    console.log(`Data with number ${runid} deleted successfully`);
+    res.status(200).json({ message: 'Data deleted successfully', 
+      deletedData1: results1.rows[0],
+      deletedData2: results2.rows[0] 
+    });
+  } else {
+    console.log(`No data found with runid ${runid}`);
+    res.status(404).json({ error: 'Data not found' });
+  }
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ error: 'Internal Server Error' });
+}
+});
+
+
+//wen
+//deletes both a run and the submit associated with it based on the runid of that run
 app.delete('/deleteData/:number', async (req, res) => {
   const number = req.params.number;
 
@@ -177,6 +214,7 @@ app.delete('/deleteData/:number', async (req, res) => {
 });
 
 
+//wen
 app.put('/updateData/:number', async (req, res) => {
   const number = req.params.number;
   const { newNumber } = req.body;
@@ -198,6 +236,7 @@ app.put('/updateData/:number', async (req, res) => {
 });
 
 
+//wen
 app.put('/updateRunner/:username', async (req, res) => {
   const username = req.params.username;
   const { newUsername } = req.body;
