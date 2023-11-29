@@ -198,6 +198,27 @@ app.put('/updateData/:number', async (req, res) => {
 });
 
 
+app.put('/updateRunner/:username', async (req, res) => {
+  const username = req.params.username;
+  const { newUsername } = req.body;
+
+  try {
+    const result = await pool.query('UPDATE runner SET username = $1 WHERE username = $2 RETURNING *', [newUsername, username]);
+
+    if (result.rows.length > 0) {
+      console.log(`Runner with username ${username} updated successfully`);
+      res.status(200).json({ message: 'Runner updated successfully', updatedRunner: result.rows[0] });
+    } else {
+      console.log(`No runner found with username ${username}`);
+      res.status(404).json({ error: 'Runner not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
