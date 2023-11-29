@@ -59,9 +59,77 @@ app.post('/insertGameData', async (req, res) => {
 });
 
 
+//search for runs associated with a runner 
+//(i.e., with runs that have a runner username containing user input)
+//run = runner's username, game name, category name, run time, vod, submission date, submission time
+app.get('/searchByRunner', async (req, res) => {
+  const runner = req.query.runner;
+  console.log('Search Term:', runner);
+  try {
+    const results = await pool.query(
+      `SELECT runner.username, run.gamename, category.type, run.runtime, run.vod, submits.date, submits.time
+       FROM runner, run, category, submits
+       WHERE runner.username ILIKE $1
+         AND category.categoryID = run.categoryID
+         AND runner.runnerID = submits.runnerID
+         AND submits.runID = run.runID`,
+      [`${runner}%`]
+    );
+    res.status(200).json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+//to test, need to do /searchByRunner?runner=runnername, can change to post so that it doesn't do this, but shouldn't be necessary
+
+
+//search for runs associated with a a game name
+app.get('/searchByGame', async (req, res) => {
+  const game = req.query.game;
+  console.log('Search Term:', game);
+  try {
+    const results = await pool.query(
+      `SELECT runner.username, run.gamename, category.type, run.runtime, run.vod, submits.date, submits.time
+       FROM runner, run, category, submits
+       WHERE run.gamename ILIKE $1
+         AND category.categoryID = run.categoryID
+         AND runner.runnerID = submits.runnerID
+         AND submits.runID = run.runID`,
+      [`${game}%`]
+    );
+    res.status(200).json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+//search for runs associated with a category type
+app.get('/searchByCategory', async (req, res) => {
+  const category = req.query.category;
+  console.log('Search Term:', category);
+  try {
+    const results = await pool.query(
+      `SELECT runner.username, run.gamename, category.type, run.runtime, run.vod, submits.date, submits.time
+       FROM runner, run, category, submits
+       WHERE category.type ILIKE $1
+         AND category.categoryID = run.categoryID
+         AND runner.runnerID = submits.runnerID
+         AND submits.runID = run.runID`,
+      [`${category}%`]
+    );
+    res.status(200).json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.get('/getData', async (req, res) => {
   try {
-    const data = await await pool.query('SELECT * FROM testtable');
+    const data = await pool.query('SELECT * FROM testtable');
     data.rows.forEach(row => {
       console.log(`Data number with value: ${row.number}`);
     });
