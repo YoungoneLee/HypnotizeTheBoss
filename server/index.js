@@ -194,6 +194,7 @@ try {
 
 
 //wen
+//http://localhost:3000/deleteRunnerData/2 !! works 
 //deletes runner based on their username -- rewritten code but it's more readable prolly
 app.delete('/deleteRunnerData/:runnerid', async (req, res) => {
   const runner = req.params.runnerid
@@ -212,8 +213,8 @@ app.delete('/deleteRunnerData/:runnerid', async (req, res) => {
 
     const runid = runidResult.rows[0].runid;
 
-    const results1 = await pool.query('DELETE FROM runner WHERE runner = $1 RETURNING *', [runner]);
-    const results2 = await pool.query('DELETE FROM submits WHERE runner = $1 RETURNING *', [runner]);
+    const results1 = await pool.query('DELETE FROM runner WHERE runnerID = $1 RETURNING *', [runner]);
+    const results2 = await pool.query('DELETE FROM submits WHERE runnerID = $1 RETURNING *', [runner]);
     const results3 = await pool.query('DELETE FROM run WHERE runid = $1 RETURNING *', [runid]);
 
     if (results1.rows.length > 0) {
