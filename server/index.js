@@ -273,32 +273,6 @@ app.delete('/deleteGameData/:gamename', async (req, res) => {
   }
 });
 
-
-//wen 
-//delete categoryType
-app.delete('/deleteCategory/:categoryType', async (req, res) => {
-  const categoryType = req.params.categoryType;
-  try {
-    const results = await pool.query('DELETE FROM category WHERE type = $1 RETURNING *', [categoryType]);
-
-    if (results.rows.length > 0) {
-      console.log(`Category with type ${categoryType} deleted successfully`);
-      res.status(200).json({
-        message: 'Category deleted successfully',
-        deletedCategory: results.rows[0],
-      });
-    } else {
-      console.log(`No category found with type ${categoryType}`);
-      res.status(404).json({ error: 'Category not found' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-
-
 //wen
 app.delete('/deleteData/:number', async (req, res) => {
   const number = req.params.number;
