@@ -273,9 +273,6 @@ app.delete('/deleteGameData/:gamename', async (req, res) => {
   }
 });
 
-
-
-
 //wen
 app.delete('/deleteData/:number', async (req, res) => {
   const number = req.params.number;
@@ -295,6 +292,26 @@ app.delete('/deleteData/:number', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+//wen insert 
+app.post('/insertRunner', async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    const results = await pool.query('INSERT INTO runner(username) VALUES($1) RETURNING *', [username]);
+
+    console.log(`Runner with username ${username} inserted successfully`);
+    res.status(201).json({
+      message: 'Runner inserted successfully',
+      insertedRunner: results.rows[0],
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 
 //wen
