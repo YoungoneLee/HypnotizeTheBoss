@@ -24,10 +24,13 @@ app.post('/insertData', async (req, res) => {
 
 //wen
 app.post('/insertRunData', async (req, res) => {
-  const { vod, runtime, categoryID, gameName } = req.body;
+  const { vod, runtime, type, gameName } = req.body;
   try {
-    const result = await pool.query('INSERT INTO run (vod, runtime, categoryID, gameName) VALUES ($1, $2, $3, $4) RETURNING *', [vod, runtime, categoryID, gameName]);
-    console.log(`Data inserted with RunID: ${result.rows[0].runID}`);
+    const result = await pool.query('INSERT INTO run (vod, runtime, type, gameName) VALUES ($1, $2, $3, $4) RETURNING *', [vod, runtime, type, gameName]);
+    console.log(`Data inserted with RunID: ${result.rows[0].vod}`);
+    
+    const result2 = await pool.query('INSERT INTO submits (time, date, runID, runnerID) VALUES (now(), now(), $1, 1) RETURNING *', [result.rows[0].runid]);
+    //console.log(`Data inserted with SubmissionID: ${result2.rows[0].submissionID}`);
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error(error);
