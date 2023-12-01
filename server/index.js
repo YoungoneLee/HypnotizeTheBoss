@@ -168,6 +168,7 @@ app.get('/getRunData', async (req, res) => {
 
 
 //wen
+//deletes both a run and the submit associated with it based on the runid of that run
 app.delete('/deleteRunData/:runid', async (req, res) => {
 const runid = req.params.runid;
 
@@ -193,7 +194,47 @@ try {
 
 
 //wen
-//deletes both a run and the submit associated with it based on the runid of that run
+//http://localhost:3000/deleteRunnerData/2 !! works 
+//deletes runner based on their username -- rewritten code but it's more readable prolly
+app.delete('/deleteRunnerData/:runnerid', async (req, res) => {
+  const runner = req.params.runnerid
+
+
+  try {
+    
+    //returns the runid we want from the tables
+    const runidResult = await pool.query('SELECT run.runid FROM run, submits  WHERE run.runid = submits.runid AND  submits.runnerid = $1', [runner]);
+    
+    if (runidResult.rows.length === 0) {
+      console.log(`No runid found for runner ${runner}`);
+      res.status(404).json({ error: 'Data not found' });
+      return;
+    }
+
+    const runid = runidResult.rows[0].runid;
+
+    const results1 = await pool.query('DELETE FROM runner WHERE runnerID = $1 RETURNING *', [runner]);
+    const results2 = await pool.query('DELETE FROM submits WHERE runnerID = $1 RETURNING *', [runner]);
+    const results3 = await pool.query('DELETE FROM run WHERE runid = $1 RETURNING *', [runid]);
+
+    if (results1.rows.length > 0) {
+      console.log(`Data with number ${runner} deleted successfully`);
+      res.status(200).json({ message: 'Data deleted successfully', 
+        deletedData1: results1.rows[0],
+        deletedData2: results2.rows[0], 
+        deletedData3: results3.rows[0], 
+        });
+    } else {
+      console.log(`No data found with username ${runner}`);
+      res.status(404).json({ error: 'Data not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+//wen
 app.delete('/deleteData/:number', async (req, res) => {
   const number = req.params.number;
 
