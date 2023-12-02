@@ -156,9 +156,9 @@ app.get('/getRunData', async (req, res) => {
 
   try {
     const data = await pool.query('SELECT * FROM run');
-    data.rows.forEach(row => {
-      console.log(`RunID: ${row.runid}, VOD: ${row.vod}, Runtime: ${row.runtime}, CategoryID: ${row.categoryid}, GameName: ${row.gamename}`);
-    });
+    // data.rows.forEach(row => {
+    //   console.log(`RunID: ${row.runid}, VOD: ${row.vod}, Runtime: ${row.runtime}, CategoryID: ${row.categoryid}, GameName: ${row.gamename}`);
+    // });
     res.status(200).json(data.rows);
   } catch (error) {
     console.error(error);

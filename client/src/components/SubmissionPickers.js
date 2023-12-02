@@ -10,6 +10,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Typography from '@mui/material/Typography';
 
 
 const SubmissionPicker = () => {
@@ -33,16 +34,16 @@ const SubmissionPicker = () => {
     return(
         <div>
             <Box> 
-            <Stack direction="row" spacing={2} sx = {{mt: 11}}>
+            <Stack direction="row" spacing={2} sx = {{mt: 10.5}}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={['DatePicker', 'DatePicker']}>
                     <DatePicker
-                        label="Controlled picker"
+                        label="Range From: "
                         value={value}
                         onChange={(newValue) => setValue(newValue)}
                         />
                     <DatePicker
-                        label="Controlled picker"
+                        label="Range To: "
                         value={value}
                         onChange={(newValue) => setValue(newValue)}
                     />
@@ -52,11 +53,19 @@ const SubmissionPicker = () => {
 
             <Stack>
                 <FormGroup>
-                    <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-                    <FormControlLabel required control={<Switch />} label="Required" />
+                    <FormControlLabel control={<Checkbox defaultChecked />} label="Till Present" />
+                    <Stack direction="row" spacing={1} alignItems="center">
+                        <Typography>Fastest</Typography>
+                        <FormControlLabel required control={<Switch />} />
+                        <Typography>Slowest</Typography>
+                    </Stack>
                 </FormGroup>
             </Stack>
             </Box>
+
+
+
+            
         </div>
     );
 };
