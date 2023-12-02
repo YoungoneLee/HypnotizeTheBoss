@@ -1,16 +1,26 @@
-import React, {Fragment, useState} from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/system/Stack';
-import dayjs from 'dayjs';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Switch from '@mui/material/Switch';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Switch from '@mui/material/Switch';
+
+const theme = createTheme({
+    palette: {
+      neutral: {
+        main: '#yourColor', // replace with your color
+        contrastText: '#yourContrastColor', // replace with your contrast color
+      },
+    },
+  });
+  
 
 
 const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, toDate, fromDate, tillPresent}) => {
@@ -26,7 +36,6 @@ const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, toDate, fromD
         setTillPresent(e.target.checked);
     };
   
-
     return(
         <div>
             <Box> 
@@ -57,7 +66,9 @@ const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, toDate, fromD
                         />
                     <Stack direction="row" spacing={1} alignItems="center">
                         <Typography>Fastest</Typography>
-                        <FormControlLabel required control={<Switch />} />
+                        <ThemeProvider theme={theme}>
+                            <Switch color="neutral" />
+                        </ThemeProvider>
                         <Typography>Slowest</Typography>
                     </Stack>
                 </FormGroup>
