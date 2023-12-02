@@ -13,23 +13,14 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Typography from '@mui/material/Typography';
 
 
-const SubmissionPicker = () => {
+const SubmissionPicker = ({setFromDate, setToDate, toDate, fromDate}) => {
+    const handleFromInputChange = (value) => {
+        setFromDate(value);
+    };
 
-    //dates const to use for useState
-    //const [submit]
-    const [value, setValue] = React.useState(dayjs('2022-04-17'));
-
-    const handleSubmit = async(e) => {
-        e.preventDefault(); 
-
-        try {
-            //send post stuff here 
-            console.log("we sending stuff");
-        } catch (err) {
-            console.log(err.message);
-        }
-    }
-
+    const handleToInputChange = (value) => {
+        setToDate(value);
+    };
 
     return(
         <div>
@@ -39,13 +30,13 @@ const SubmissionPicker = () => {
                 <DemoContainer components={['DatePicker', 'DatePicker']}>
                     <DatePicker
                         label="Range From: "
-                        value={value}
-                        onChange={(newValue) => setValue(newValue)}
+                        value={fromDate}
+                        onChange={handleFromInputChange}
                         />
                     <DatePicker
                         label="Range To: "
-                        value={value}
-                        onChange={(newValue) => setValue(newValue)}
+                        value={toDate}
+                        onChange={handleToInputChange}
                     />
                 </DemoContainer>
             </LocalizationProvider>
