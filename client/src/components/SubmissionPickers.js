@@ -15,15 +15,15 @@ import Switch from '@mui/material/Switch';
 const theme = createTheme({
     palette: {
       neutral: {
-        main: '#yourColor', // replace with your color
-        contrastText: '#yourContrastColor', // replace with your contrast color
+        main: '#303740', // replace with your color
+        contrastText: '#ff0000', // replace with your contrast color
       },
     },
   });
   
 
 
-const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, toDate, fromDate, tillPresent}) => {
+const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, setChecked, toDate, fromDate, tillPresent, checked}) => {
     const handleFromInputChange = (value) => {
         setFromDate(value);
     };
@@ -36,6 +36,10 @@ const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, toDate, fromD
         setTillPresent(e.target.checked);
     };
   
+    const handleCheckChange = (e) => {
+        setChecked(e.target.checked);
+    }
+
     return(
         <div>
             <Box> 
@@ -67,7 +71,14 @@ const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, toDate, fromD
                     <Stack direction="row" spacing={1} alignItems="center">
                         <Typography>Fastest</Typography>
                         <ThemeProvider theme={theme}>
-                            <Switch color="neutral" />
+                            <Switch
+                                color="neutral"
+                                disabled={false}
+                                size="lg"
+                                variant="solid"
+                                checked={checked}
+                                onChange={handleCheckChange}
+                                />
                         </ThemeProvider>
                         <Typography>Slowest</Typography>
                     </Stack>

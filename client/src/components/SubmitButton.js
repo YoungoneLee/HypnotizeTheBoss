@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from '@mui/material';
 
-const SubmitHeaderButton = ({username, gamename, runtime, fromDate, toDate, tillPresent}) => {
+const SubmitHeaderButton = ({username, gamename, runtime, fromDate, toDate, tillPresent, checked}) => {
     const onSubmitForm = async () => {
         try {
             console.log("within the try block of the submit button file");
@@ -11,6 +11,7 @@ const SubmitHeaderButton = ({username, gamename, runtime, fromDate, toDate, till
             console.log("from date: " + fromDate.toString());
             console.log("to date: " + toDate.toString());
             console.log("till present check: " + tillPresent.toString());
+            console.log("is slowest: " + checked.toString());
         } catch (err) {
             console.log(err.message);
         }
