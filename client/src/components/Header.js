@@ -12,6 +12,7 @@ import SubmitHeaderButton from './SubmitButton';
 export default function Header() {
     const [username, setUsername] = useState('');
     const [gamename, setGamename] = useState('');
+    const [runtime, setRuntime] = useState('');
 
 
     return (
@@ -22,9 +23,9 @@ export default function Header() {
                 <Fragment>
                     <RunnerSearchBar setUsername={setUsername}/>
                     <GameSearchBar setGamename={setGamename}/>
-                    <RuntimeDropdown/>
+                    <RuntimeDropdown setRuntime={setRuntime} runtime={runtime}/>
                     <SubmissionPicker/>
-                    <SubmitHeaderButton username={username} gamename ={gamename}/>
+                    <SubmitHeaderButton username={username} gamename ={gamename} runtime={runtime}/>
                 </Fragment>
 
                 <Box sx={{ flexGrow: 1 }} />
