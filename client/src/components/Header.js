@@ -15,6 +15,7 @@ export default function Header() {
     const [runtime, setRuntime] = useState('');
     const [fromDate, setFromDate] = useState(dayjs('')); 
     const [toDate, setToDate] = useState(dayjs(''));
+    const [tillPresent, setTillPresent] = useState(Boolean);
 
     return (
         <AppBar position="static" sx={{ backgroundColor: 'grey' }}>
@@ -25,8 +26,8 @@ export default function Header() {
                     <RunnerSearchBar setUsername={setUsername}/>
                     <GameSearchBar setGamename={setGamename}/>
                     <RuntimeDropdown setRuntime={setRuntime} runtime={runtime}/>
-                    <SubmissionPicker setFromDate={setFromDate} setToDate={setToDate} fromDate={fromDate} toDate={toDate} />
-                    <SubmitHeaderButton username={username} gamename ={gamename} runtime={runtime} fromDate={fromDate} toDate={toDate} />
+                    <SubmissionPicker setFromDate={setFromDate} setToDate={setToDate} setTillPresent={setTillPresent} fromDate={fromDate} toDate={toDate} tillPresent={tillPresent} />
+                    <SubmitHeaderButton username={username} gamename ={gamename} runtime={runtime} fromDate={fromDate} toDate={toDate} tillPresent={tillPresent}/>
                 </Fragment>
 
                 <Box sx={{ flexGrow: 1 }} />

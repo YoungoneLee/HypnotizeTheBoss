@@ -13,7 +13,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Typography from '@mui/material/Typography';
 
 
-const SubmissionPicker = ({setFromDate, setToDate, toDate, fromDate}) => {
+const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, toDate, fromDate, tillPresent}) => {
     const handleFromInputChange = (value) => {
         setFromDate(value);
     };
@@ -21,6 +21,11 @@ const SubmissionPicker = ({setFromDate, setToDate, toDate, fromDate}) => {
     const handleToInputChange = (value) => {
         setToDate(value);
     };
+
+    const handleTillPresentChange = (e) => {
+        setTillPresent(e.target.checked);
+    };
+  
 
     return(
         <div>
@@ -44,7 +49,12 @@ const SubmissionPicker = ({setFromDate, setToDate, toDate, fromDate}) => {
 
             <Stack>
                 <FormGroup>
-                    <FormControlLabel control={<Checkbox defaultChecked />} label="Till Present" />
+                    <FormControlLabel 
+                        control={<Checkbox/>} 
+                        label="Till Present" 
+                        checked={tillPresent}
+                        onChange={handleTillPresentChange}
+                        />
                     <Stack direction="row" spacing={1} alignItems="center">
                         <Typography>Fastest</Typography>
                         <FormControlLabel required control={<Switch />} />
