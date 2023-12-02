@@ -1,25 +1,14 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment} from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 
 
-const GameSearchBar = () => {
-    const [gamename, setGamename] = useState('');
+const GameSearchBar = ({setGamename}) => {
+  const handleInputChange = (e) => {
+    setGamename(e.target.value);
+  }
 
-    const handleSubmit = async(e) => {
-        //avoid refreshing constantly
-        e.preventDefault();
-
-        try {
-            //write the post 
-            console.log("within the try block");
-        } catch (err) {
-            console.log(err.message);
-        }
-    }
-    
-    
     return (
         <Box
           component="form"
@@ -29,9 +18,12 @@ const GameSearchBar = () => {
           noValidate
           autoComplete="off"
         >
-          <TextField id="outlined-basic" label="Game Name" variant="outlined" />
-          {/* <TextField id="filled-basic" label="Filled" variant="filled" /> */}
-          {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
+          <TextField 
+            id="outlined-basic" 
+            label="Game Name" 
+            variant="outlined"
+            onChange={handleInputChange} 
+            />
         </Box>
       );
 };
