@@ -1,7 +1,7 @@
-import React, { Fragment }  from 'react'
+import React, { Fragment, useState }  from 'react';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
-//css
 import './App.css';
+import RunContext from './components/RunContext';
 
 //pages
 import Home from './pages/Home';
@@ -16,9 +16,14 @@ import NoPage from './pages/NoPage';
 import UserForm from './components/RunSubmitForm';
 
 
+
 function App() {
+
+  const [searchbarRuns, setSearchbarRuns] = useState([]);
+
   return (
     <div>
+      <RunContext.Provider value={{ searchbarRuns, setSearchbarRuns}}>
       <div>
       <BrowserRouter>
       <Routes>
@@ -38,6 +43,7 @@ function App() {
           </div>
         </Fragment>
       </div>
+      </RunContext.Provider >
     </div>
   );
 }

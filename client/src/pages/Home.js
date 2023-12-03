@@ -1,12 +1,13 @@
 import Header from '../components/Header'
 import ListGames from '../components/ListData';
+import ReusableListRuns from '../components/ReusableListRuns';
 
 export default function Home(){
     return(
         <>
             <Header title="HomePage!"/>
-            <h1> Random Run(s) of the Day! </h1>
-            <ListGames/>
+            <h1> testing reusable components </h1>
+            {/* <ListGames/> */}
         </>
     )
 }
