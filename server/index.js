@@ -375,11 +375,11 @@ app.get('/getSearchbarRuns', async (req, res) => {
   const queryParams = [];
 
   if (gamename) {
-    queryParams.push(`gamename = '${gamename}'`);
+    queryParams.push(`gamename ILIKE '${gamename}%'`);
   }
 
   if (type) {
-    queryParams.push(`type = '${type}'`);
+    queryParams.push(`type ILIKE '${type}%'`);
   }
 
   if (runtime) {
