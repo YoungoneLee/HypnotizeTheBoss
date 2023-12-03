@@ -173,15 +173,51 @@ app.get('/getRunData', async (req, res) => {
 
   try {
     const data = await pool.query('SELECT * FROM run');
-    data.rows.forEach(row => {
-      console.log(`RunID: ${row.runid}, VOD: ${row.vod}, Runtime: ${row.runtime}, CategoryID: ${row.categoryid}, GameName: ${row.gamename}`);
-    });
+    // data.rows.forEach(row => {
+    //   console.log(`RunID: ${row.runid}, VOD: ${row.vod}, Runtime: ${row.runtime}, CategoryID: ${row.categoryid}, GameName: ${row.gamename}`);
+    // });
     res.status(200).json(data.rows);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+
+
+
+//getSearchbarRuns
+app.get('/getSearchbarRuns', async (req, res) => {
+  // Extract the parameters from the query string
+  const { gamename, type } = req.query;
+
+  // Build the SQL query dynamically based on the presence of optional parameters
+  let queryString = 'SELECT * FROM run';
+  const queryParams = [];
+
+  if (gamename) {
+    queryParams.push(`gamename = '${gamename}'`);
+  }
+
+  if (type) {
+    queryParams.push(`type = '${type}'`);
+  }
+
+  if (queryParams.length > 0) {
+    queryString += ' WHERE ' + queryParams.join(' AND ');
+  }
+
+  try {
+    const data = await pool.query(queryString);
+    res.status(200).json(data.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 
 
 //wen
