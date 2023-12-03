@@ -21,8 +21,6 @@ const theme = createTheme({
     },
   });
   
-
-
 const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, setChecked, toDate, fromDate, tillPresent, checked}) => {
     const handleFromInputChange = (value) => {
         setFromDate(value);
@@ -85,10 +83,6 @@ const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, setChecked, t
                 </FormGroup>
             </Stack>
             </Box>
-
-
-
-            
         </div>
     );
 };

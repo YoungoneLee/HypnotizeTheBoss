@@ -2,9 +2,9 @@ import React, {Fragment} from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-const RunnerSearchBar = ({setUsername}) => {
+const CategorySearchBar = ({setCategory}) => {
   const handleInputChange = (e) => {
-    setUsername(e.target.value);
+    setCategory(e.target.value);
   };
 
   return (
@@ -19,7 +19,7 @@ const RunnerSearchBar = ({setUsername}) => {
       >
         <TextField 
           id="outlined-basic" 
-          label="Runner Name" 
+          label="Category Type" 
           variant="outlined" 
           onChange={handleInputChange} 
           />
@@ -28,4 +28,4 @@ const RunnerSearchBar = ({setUsername}) => {
     );
   };
 
-  export default RunnerSearchBar;
+  export default CategorySearchBar;
