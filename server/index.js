@@ -172,17 +172,15 @@ app.get('/getRunData', async (req, res) => {
 
 //getSearchbarRuns
 app.get('/getSearchbarRuns', async (req, res) => {
-  console.log('GET request to /getRuns received');
-
   // Extract the parameters from the query string
-  const { gameName, type } = req.query;
+  const { gamename, type } = req.query;
 
   // Build the SQL query dynamically based on the presence of optional parameters
   let queryString = 'SELECT * FROM run';
   const queryParams = [];
 
-  if (gameName) {
-    queryParams.push(`gameName = '${gameName}'`);
+  if (gamename) {
+    queryParams.push(`gamename = '${gamename}'`);
   }
 
   if (type) {
