@@ -184,13 +184,10 @@ app.get('/getRunData', async (req, res) => {
 });
 
 
-
-
-
 //getSearchbarRuns
 app.get('/getSearchbarRuns', async (req, res) => {
   // Extract the parameters from the query string
-  const { gamename, type } = req.query;
+  const { gamename, type, runtime } = req.query;
 
   // Build the SQL query dynamically based on the presence of optional parameters
   let queryString = 'SELECT * FROM run';
@@ -202,6 +199,12 @@ app.get('/getSearchbarRuns', async (req, res) => {
 
   if (type) {
     queryParams.push(`type = '${type}'`);
+  }
+
+  if (runtime) {
+    // Assuming the runtime is stored as TIME, you may need to adjust the condition accordingly
+    //00:${maxRuntime}:00
+    queryParams.push(`runtime < TIME '${runtime}'`);
   }
 
   if (queryParams.length > 0) {
@@ -216,9 +219,6 @@ app.get('/getSearchbarRuns', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-
-
 
 //wen
 //deletes both a run and the submit associated with it based on the runid of that run
