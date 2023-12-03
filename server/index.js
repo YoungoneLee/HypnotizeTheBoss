@@ -151,6 +151,187 @@ app.get('/searchByCategory', async (req, res) => {
   }
 });
 
+//leah
+//advanced function to get "more like this"
+app.get('/moreLikeThis', async (req, res) => {
+  const runid = req.query.runid;
+  console.log('Original RunID:', runid);
+  try {
+
+    //get other variables used in queries
+
+    const gameResults = await pool.query(`SELECT gamename FROM run WHERE run.runid = '${runid}'`);
+    const game = gameResults.rows[0].gamename;
+
+    const genreResults = await pool.query(`SELECT game.genre FROM game WHERE game.gamename = '${game}'`);
+    const genre = genreResults.rows[0].genre;
+
+    const usernameResults = await pool.query(`SELECT runner.username FROM run, submits, runner WHERE run.runid = '${runid}' AND run.runid = submits.runid AND submits.runnerid=runner.runnerid`);
+    const username = usernameResults.rows[0].username;
+
+    const categoryResults = await pool.query(`SELECT run.type FROM run WHERE run.runid = '${runid}'`);
+    const category = categoryResults.rows[0].type;
+
+    const runtimeResults = await pool.query(`SELECT run.runtime FROM run WHERE run.runID= '${runid}'`);
+    const runtime = runtimeResults.rows[0].runtime;
+
+    //(re)make omegatable
+
+    // await pool.query(`
+    //    CREATE OR REPLACE VIEW omegatable AS
+    //   SELECT runner.runnerid, runner.username, 
+    //     run.runid, run.vod, run.runtime, run.type, 
+    //     game.gamename, game.genre, game.releaseyear, 
+    //     submits.submissionid, submits.time, submits.date
+    //   FROM run, runner, game, submits
+    //   WHERE run.runid = submits.runid 
+    //     AND submits.runnerid = runner.runnerid
+    //     AND run.gamename = game.gamename
+    // `)
+
+    //(re)make views for each combo of attributes
+
+    await pool.query(`
+      CREATE OR REPLACE VIEW runnergenre AS
+      SELECT *
+      FROM omegatable
+      WHERE gamename <> '${game}'
+        AND genre = '${genre}'
+        AND username = '${username}'
+    `);
+
+    await pool.query(`  
+      CREATE OR REPLACE VIEW genretime AS
+      SELECT *
+      FROM omegatable
+      WHERE genre = '${genre}'
+        AND (runtime <= time '${runtime}'::time + '5 minutes'::interval 
+        AND runtime >= time '${runtime}'::time - '5 minutes'::interval) 
+        AND gamename <> '${game}'
+    `);
+
+    await pool.query(`
+      CREATE OR REPLACE VIEW runnertime AS
+      SELECT *
+      FROM omegatable
+      WHERE username = '${username}'
+        AND (runtime <= time '${runtime}'::time + '5 minutes'::interval 
+        AND runtime >= time '${runtime}'::time - '5 minutes'::interval) 
+        AND runid <> '${runid}'
+    `);
+
+    await pool.query(`
+      CREATE OR REPLACE VIEW genrecategory AS
+      SELECT *
+      FROM omegatable
+      WHERE genre = '${genre}'
+        AND gamename <> '${game}'
+        AND type = '${category}'
+    `);
+
+    await pool.query(`
+      CREATE OR REPLACE VIEW runnercategory AS
+      SELECT *
+      FROM omegatable
+      WHERE username = '${username}' 
+        AND type = '${category}'
+        AND runid <> '${runid}'
+    `);
+
+    await pool.query(`
+      CREATE OR REPLACE VIEW categorytime AS
+      SELECT *
+      FROM omegatable
+      WHERE type = '${category}' 
+        AND (runtime <= time '${runtime}'::time + '5 minutes'::interval 
+        AND runtime >= time '${runtime}'::time - '5 minutes'::interval)
+        AND runid <> '${runid}'
+    `);
+
+    await pool.query(`
+      CREATE OR REPLACE VIEW gamerunner AS
+      SELECT *
+      FROM omegatable
+      WHERE gamename = '${game}' 
+        AND username = '${username}' 
+        AND runID <> '${runid}'
+    `);
+
+    await pool.query(`
+      CREATE OR REPLACE VIEW gametime AS
+      SELECT *
+      FROM omegatable
+      WHERE gamename = '${game}' 
+        AND (runtime <= time '${runtime}'::time + '5 minutes'::interval 
+        AND runtime >= time '${runtime}'::time - '5 minutes'::interval) 
+        AND runID <> '${runid}'
+    `);
+
+    await pool.query(`
+      CREATE OR REPLACE VIEW gamecategory AS
+      SELECT *
+      FROM omegatable
+      WHERE gamename = '${game}' 
+        AND type = '${category}' 
+        AND runID <> '${runid}'
+    `);
+
+    //(re)make views for each set of priorities
+
+    await pool.query(`
+      CREATE OR REPLACE VIEW high AS
+      (SELECT * FROM runnergenre)
+      UNION
+      (SELECT * FROM runnertime)
+      UNION
+      (SELECT * FROM gamecategory)
+    `);
+
+    await pool.query(`
+      CREATE OR REPLACE VIEW mid AS
+      (SELECT * FROM runnercategory)
+      UNION
+      (SELECT * FROM gamerunner)
+      UNION
+      (SELECT * FROM gametime) 
+    `);
+
+    await pool.query(`
+      CREATE OR REPLACE VIEW low AS
+      (SELECT * FROM genretime)
+      UNION
+      (SELECT * FROM genrecategory)
+      UNION
+      (SELECT * FROM categorytime)
+    `);
+
+    //(re)make view containing 5 high, 3 mid, 2 low priority runs
+
+    await pool.query(`
+      CREATE OR REPLACE VIEW morelikethis AS
+      (SELECT * FROM high LIMIT 5)
+      UNION
+      (SELECT * FROM mid LIMIT 3)
+      UNION
+      (SELECT * FROM low LIMIT 2)
+    `);
+
+    //select info to return from last view
+
+    const results = await pool.query(`
+      SELECT username, gamename, type, runtime, vod, time, date
+      FROM morelikethis
+    `);
+
+    //return info
+    
+    res.status(200).json(results);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 //wen
 app.get('/getData', async (req, res) => {
