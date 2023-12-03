@@ -307,7 +307,7 @@ app.get('/moreLikeThis', async (req, res) => {
 
     //(re)make view containing 5 high, 3 mid, 2 low priority runs
 
-    const morelikethis = await pool.query(`
+    await pool.query(`
       CREATE OR REPLACE VIEW morelikethis AS
       (SELECT * FROM high LIMIT 5)
       UNION
@@ -318,7 +318,7 @@ app.get('/moreLikeThis', async (req, res) => {
 
     //select info to return from last view
 
-    const results = pool.query(`
+    const results = await pool.query(`
       SELECT username, gamename, type, runtime, vod, time, date
       FROM morelikethis
     `);
