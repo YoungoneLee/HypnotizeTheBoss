@@ -1,6 +1,4 @@
 import Header from '../components/Header'
-import ListGames from '../components/ListData';
-import ReusableListRuns from '../components/ReusableListRuns';
 
 export default function Home(){
     return(
