@@ -3,12 +3,11 @@ import React from "react";
 import { useNavigate } from 'react-router-dom';
 
 const SimilarRunButton = ({row}) => {
-
     const navigate = useNavigate();
 
     const handleClick = () => {
         console.log(row)
-        navigate("/similarRuns"); // replace "/newPage" with the path you want to navigate to
+        navigate("/similarRuns", {state: {row}}); // replace "/newPage" with the path you want to navigate to
     }
 
     return(
