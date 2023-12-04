@@ -16,7 +16,7 @@ const SimilarRunPage = () => {
 
 
         <CssBaseline />
-            <Container fixed  sx={{ bgcolor: '#cfe8fc', height: '200vh' }}>
+            <Container fixed  sx={{ bgcolor: '#cfe8fc', height: '200vh', marginTop: '10px'}}>
             {/* <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} /> */}
                 {row && Object.entries(row).map(([key, value], index) => (
                 <h1 key={index}>{key}: {value}</h1>
