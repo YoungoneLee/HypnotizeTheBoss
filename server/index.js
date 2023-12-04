@@ -370,16 +370,16 @@ app.get('/getSearchbarRuns', async (req, res) => {
   // Extract the parameters from the query string
   const { username, gamename, type, runtime } = req.query;
   
-  await pool.query(`
-    CREATE OR REPLACE VIEW omegatable AS
-    SELECT runner.runnerid, runner.username, 
-      run.runid, run.vod, run.runtime, run.type, 
-      game.gamename, game.genre, game.releaseyear, 
-      submits.submissionid, submits.time, submits.date
-    FROM run, runner, game, submits
-    WHERE run.runid = submits.runid 
-      AND submits.runnerid = runner.runnerid
-      AND run.gamename = game.gamename`)
+  // await pool.query(`
+  //   CREATE OR REPLACE VIEW omegatable AS
+  //   SELECT runner.runnerid, runner.username, 
+  //     run.runid, run.vod, run.runtime, run.type, 
+  //     game.gamename, game.genre, game.releaseyear, 
+  //     submits.submissionid, submits.time, submits.date
+  //   FROM run, runner, game, submits
+  //   WHERE run.runid = submits.runid 
+  //     AND submits.runnerid = runner.runnerid
+  //     AND run.gamename = game.gamename`)
   
   //   console.log("omegatable: " + omegatable.toString());
 
@@ -399,17 +399,22 @@ app.get('/getSearchbarRuns', async (req, res) => {
     queryParams.push(`type ILIKE '${type}%'`);
   }
 
-  if (runtime) {
+  if (runtime && runtime != 'fastest' && runtime != 'slowest') {
     queryParams.push(`runtime < TIME '${runtime}'`);
-  }
+  } 
 
   if (queryParams.length > 0) {
     queryString += ' WHERE ' + queryParams.join(' AND ');
   }
 
+  if (runtime == 'fastest') {
+    queryString += ' ORDER BY runtime ASC';
+  } else if (runtime == 'slowest') {
+    queryString += ' ORDER BY runtime DESC';
+  }
+
   try {
     const data = await pool.query(queryString);
-    console.log("data: " + data.toString());
     res.status(200).json(data.rows);
   } catch (error) {
     console.error(error);
