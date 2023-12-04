@@ -368,7 +368,7 @@ app.get('/getRunData', async (req, res) => {
 //getSearchbarRuns
 app.get('/getSearchbarRuns', async (req, res) => {
   // Extract the parameters from the query string
-  const { username, gamename, type, runtime } = req.query;
+  const { username, gamename, type, runtime, checked, fromDate, toDate } = req.query;
   
   // await pool.query(`
   //   CREATE OR REPLACE VIEW omegatable AS
@@ -381,9 +381,6 @@ app.get('/getSearchbarRuns', async (req, res) => {
   //     AND submits.runnerid = runner.runnerid
   //     AND run.gamename = game.gamename`)
   
-  //   console.log("omegatable: " + omegatable.toString());
-
-  // Build the SQL query dynamically based on the presence of optional parameters
   let queryString = 'SELECT * FROM omegatable';
   const queryParams = [];
 
@@ -403,6 +400,14 @@ app.get('/getSearchbarRuns', async (req, res) => {
     queryParams.push(`runtime < TIME '${runtime}'`);
   } 
 
+  if (fromDate) {
+    queryParams.push(`date >= DATE '${fromDate}'`);
+  }
+
+  if (toDate) {
+    queryParams.push(`date <= DATE '${toDate}'`);
+  }
+
   if (queryParams.length > 0) {
     queryString += ' WHERE ' + queryParams.join(' AND ');
   }
@@ -411,6 +416,15 @@ app.get('/getSearchbarRuns', async (req, res) => {
     queryString += ' ORDER BY runtime ASC';
   } else if (runtime == 'slowest') {
     queryString += ' ORDER BY runtime DESC';
+  }
+
+  //show by oldest submission
+  //TODO: this does not currently work
+  if(checked == true) {
+    queryString += ' ORDER BY date ASC, time ASC';
+  } else if (checked == false) {
+    //show by most recent submission 
+    queryString += ' ORDER BY date DESC, time DESC';
   }
 
   try {

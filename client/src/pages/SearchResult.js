@@ -18,6 +18,7 @@ export default function SearchResult(){
     { id: 'gamename', label: 'Game Name', align: 'left' },
     { id: 'username', label: 'Username', align: 'left' },
     { id: 'date', label: 'Submission Date', align: 'left' },
+    { id: 'time', label: 'Submission Time', align: 'left' },
   ];
   
   return (
