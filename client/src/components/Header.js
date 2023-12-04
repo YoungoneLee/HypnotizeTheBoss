@@ -15,13 +15,13 @@ export default function Header() {
     const [gamename, setGamename] = useState('');
     const [type, setCategory] = useState('');
     const [runtime, setRuntime] = useState('');
-    const [fromDate, setFromDate] = useState(dayjs('')); 
-    const [toDate, setToDate] = useState(dayjs(''));
+    const [fromDate, setFromDate] = useState(dayjs('2022-04-17')); 
+    const [toDate, setToDate] = useState(dayjs('2025-04-17'));
     const [tillPresent, setTillPresent] = useState(false);
     const [checked, setChecked] = useState(false);
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: 'grey' }}>
+        <AppBar position="static" sx={{ backgroundColor: '#8db594' }}>
             <Toolbar>
                 <img src={Logo} alt="logo" className="logo" />
 

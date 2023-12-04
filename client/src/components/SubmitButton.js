@@ -1,5 +1,5 @@
-import {Button} from '@mui/material';
-import React, { Fragment, useEffect, useState, useContext } from "react"; 
+import { Button } from '@mui/material';
+import React, { useContext } from "react"; 
 import RunContext from './RunContext';
 
 const SubmitHeaderButton = ({username, gamename, type, runtime, fromDate, toDate, tillPresent, checked}) => {
@@ -7,7 +7,14 @@ const SubmitHeaderButton = ({username, gamename, type, runtime, fromDate, toDate
 
     const onSubmitForm = async() => {
         try {
-            const queryString = `?gamename=${encodeURIComponent(gamename)}&type=${encodeURIComponent(type)}&username=${encodeURIComponent(username)}`;
+
+            let fDate = new Date(fromDate);
+            let tDate = new Date(toDate);
+
+            let formattedFromDate = fDate.toISOString().split('T')[0];
+            let formattedToDate = tDate.toISOString().split('T')[0];
+
+            const queryString = `?gamename=${encodeURIComponent(gamename)}&type=${encodeURIComponent(type)}&runtime=${encodeURIComponent(runtime)}&username=${encodeURIComponent(username)}&fromDate=${encodeURIComponent(formattedFromDate)}&toDate=${encodeURIComponent(formattedToDate)}&checked=${encodeURIComponent(checked)}`;
             const response = await fetch(`http://localhost:3000/getSearchbarRuns${queryString}`);
             const jsonData = await response.json();
 
@@ -28,6 +35,7 @@ const SubmitHeaderButton = ({username, gamename, type, runtime, fromDate, toDate
         <div>
             <Button 
                 className="customButton"
+                sx={{ m: 3}}
                 onClick={onSubmitForm}> 
                 Search 
             </Button>

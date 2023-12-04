@@ -22,7 +22,7 @@ const ReusableListRuns = ({ columns, data }) => {
           </TableHead>
           <TableBody>
             {data.map((row) => (
-                <TableRow key={row.runid}>
+                <TableRow key={row.submissionid}>
                 {columns.map((column) => (
                   <TableCell key={column.id} align={column.align}>
                     {row[column.id]}

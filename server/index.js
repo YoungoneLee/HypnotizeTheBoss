@@ -365,28 +365,66 @@ app.get('/getRunData', async (req, res) => {
 });
 
 
-
-
-
 //getSearchbarRuns
 app.get('/getSearchbarRuns', async (req, res) => {
   // Extract the parameters from the query string
-  const { gamename, type } = req.query;
-
-  // Build the SQL query dynamically based on the presence of optional parameters
-  let queryString = 'SELECT * FROM run';
+  const { username, gamename, type, runtime, checked, fromDate, toDate } = req.query;
+  
+  // await pool.query(`
+  //   CREATE OR REPLACE VIEW omegatable AS
+  //   SELECT runner.runnerid, runner.username, 
+  //     run.runid, run.vod, run.runtime, run.type, 
+  //     game.gamename, game.genre, game.releaseyear, 
+  //     submits.submissionid, submits.time, submits.date
+  //   FROM run, runner, game, submits
+  //   WHERE run.runid = submits.runid 
+  //     AND submits.runnerid = runner.runnerid
+  //     AND run.gamename = game.gamename`)
+  
+  let queryString = 'SELECT * FROM omegatable';
   const queryParams = [];
 
+  if (username) {
+    queryParams.push(`username ILIKE'${username}%'`);
+  }
+
   if (gamename) {
-    queryParams.push(`gamename = '${gamename}'`);
+    queryParams.push(`gamename ILIKE '${gamename}%'`);
   }
 
   if (type) {
-    queryParams.push(`type = '${type}'`);
+    queryParams.push(`type ILIKE '${type}%'`);
+  }
+
+  if (runtime && runtime != 'fastest' && runtime != 'slowest') {
+    queryParams.push(`runtime < TIME '${runtime}'`);
+  } 
+
+  if (fromDate) {
+    queryParams.push(`date >= DATE '${fromDate}'`);
+  }
+
+  if (toDate) {
+    queryParams.push(`date <= DATE '${toDate}'`);
   }
 
   if (queryParams.length > 0) {
     queryString += ' WHERE ' + queryParams.join(' AND ');
+  }
+
+  if (runtime == 'fastest') {
+    queryString += ' ORDER BY runtime ASC';
+  } else if (runtime == 'slowest') {
+    queryString += ' ORDER BY runtime DESC';
+  }
+
+  //show by oldest submission
+  //TODO: this does not currently work
+  if(checked == true) {
+    queryString += ' ORDER BY date ASC, time ASC';
+  } else if (checked == false) {
+    //show by most recent submission 
+    queryString += ' ORDER BY date DESC, time DESC';
   }
 
   try {

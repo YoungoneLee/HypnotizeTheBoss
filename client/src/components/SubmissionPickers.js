@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 
+
 const theme = createTheme({
     palette: {
       neutral: {
@@ -21,7 +22,8 @@ const theme = createTheme({
     },
   });
   
-const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, setChecked, toDate, fromDate, tillPresent, checked}) => {
+  const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, setChecked, toDate, fromDate, tillPresent, checked}) => {
+
     const handleFromInputChange = (value) => {
         setFromDate(value);
     };
@@ -35,7 +37,7 @@ const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, setChecked, t
     };
   
     const handleCheckChange = (e) => {
-        setChecked(e.target.checked);
+        setChecked(e.target.checked)
     }
 
     return(
@@ -47,13 +49,15 @@ const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, setChecked, t
                     <DatePicker
                         label="Range From: "
                         value={fromDate}
+                        error={false} 
                         onChange={handleFromInputChange}
                         />
                     <DatePicker
                         label="Range To: "
+                        disabled={tillPresent} // Use tillPresent directly here
                         value={toDate}
                         onChange={handleToInputChange}
-                    />
+                        />
                 </DemoContainer>
             </LocalizationProvider>
             </Stack>
@@ -67,7 +71,7 @@ const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, setChecked, t
                         onChange={handleTillPresentChange}
                         />
                     <Stack direction="row" spacing={1} alignItems="center">
-                        <Typography>Fastest</Typography>
+                        <Typography>Most Recent Submissions</Typography>
                         <ThemeProvider theme={theme}>
                             <Switch
                                 color="neutral"
@@ -78,7 +82,7 @@ const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, setChecked, t
                                 onChange={handleCheckChange}
                                 />
                         </ThemeProvider>
-                        <Typography>Slowest</Typography>
+                        <Typography>Oldest Submissions</Typography>
                     </Stack>
                 </FormGroup>
             </Stack>

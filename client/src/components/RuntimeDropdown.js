@@ -23,14 +23,14 @@ const RuntimeDropdown = ({setRuntime, runtime}) => {
           <MenuItem value="" onChange={handleInputChange}>
             <em>None</em>
           </MenuItem >
-            <MenuItem value={'Fastest'} onChange={handleInputChange}> Fastest</MenuItem>
-            <MenuItem value={'Sub 5 Minutes'} onChange={handleInputChange}> Sub 5 Minutes</MenuItem>
-            <MenuItem value={'Sub 30 Minutes'} onChange={handleInputChange}> Sub 30 Minutes</MenuItem>
-            <MenuItem value={'Sub 1 Hour'} onChange={handleInputChange}> Sub 1 Hour</MenuItem>
-            <MenuItem value={'Sub 3 Hour'} onChange={handleInputChange}> Sub 3 Hour</MenuItem>
-            <MenuItem value={'Sub 5 Hour'} onChange={handleInputChange}> Sub 5 Hour</MenuItem>
-            <MenuItem value={'Sub 10 Hour'} onChange={handleInputChange}> Sub 10 Hour</MenuItem>
-            <MenuItem value={'Slowest'} onChange={handleInputChange}> Slowest</MenuItem>
+            <MenuItem value={'fastest'} onChange={handleInputChange}> Fastest</MenuItem>
+            <MenuItem value={'00:05:00'} onChange={handleInputChange}> Sub 5 Minutes</MenuItem>
+            <MenuItem value={'00:30:00'} onChange={handleInputChange}> Sub 30 Minutes</MenuItem>
+            <MenuItem value={'01:00:00'} onChange={handleInputChange}> Sub 1 Hour</MenuItem>
+            <MenuItem value={'03:00:00'} onChange={handleInputChange}> Sub 3 Hour</MenuItem>
+            <MenuItem value={'05:00:00'} onChange={handleInputChange}> Sub 5 Hour</MenuItem>
+            <MenuItem value={'10:00:00'} onChange={handleInputChange}> Sub 10 Hour</MenuItem>
+            <MenuItem value={'slowest'} onChange={handleInputChange}> Slowest</MenuItem>
         </Select>
       </FormControl>
     </div>
