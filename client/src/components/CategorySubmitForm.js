@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { Checkbox, FormControlLabel } from '@mui/material';
 
-const UserForm = () => {
+const CategorySubmitForm = () => {
     const [type, setCategoryType] = useState('');
     const [extension, setExtension] = useState(false);
 
@@ -69,4 +69,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default CategorySubmitForm;

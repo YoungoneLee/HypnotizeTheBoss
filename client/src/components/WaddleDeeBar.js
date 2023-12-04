@@ -38,7 +38,7 @@ export default function WaddleDeeHeader(){
                             </Link> 
                         </Item>
                         <Item>
-                            <Link to="/home">
+                            <Link to="/submitCategory">
                                 <Stack direction="column" > 
                                     <img src={Logo} alt="logo" className="logo" />
                                     <p1> Submit a Category </p1>
@@ -46,7 +46,7 @@ export default function WaddleDeeHeader(){
                             </Link> 
                         </Item>
                         <Item>
-                            <Link to="/home">
+                            <Link to="/submitGame">
                                 <Stack direction="column" > 
                                     <img src={Logo} alt="logo" className="logo" />
                                     <p1> Submit a Game </p1>

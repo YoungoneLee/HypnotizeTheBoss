@@ -2,9 +2,8 @@ import React, { Fragment, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import { Checkbox, FormControlLabel } from '@mui/material';
 
-const UserForm = () => {
+const GameSubmitForm = () => {
     const [gameName, setGameName] = useState('');
     const [genre, setGenre] = useState('');
     const [releaseYear, setReleaseYear] = useState('');
@@ -86,4 +85,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default GameSubmitForm;

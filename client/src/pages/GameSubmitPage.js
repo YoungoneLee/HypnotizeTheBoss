@@ -1,11 +1,11 @@
-import UserForm from '../components/RunSubmitForm';
 import WaddleDeeHeader from '../components/WaddleDeeBar';
+import GameSubmitForm from '../components/GameSubmitForm';
 
-export default function RunSubmitPage(){
+export default function GameSubmitPage(){
     return(
         <>
             <WaddleDeeHeader/>
-            <UserForm/>
+            <GameSubmitForm/>
         </>
     )
 }
