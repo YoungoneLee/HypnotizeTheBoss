@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Box} from '@mui/material';
 import Logo from '../images/transparentwaddledee.png'
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -18,9 +19,16 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function WaddleDeeHeader(){
     return(
         <AppBar position="flex" sx={{ backgroundColor: '#8db594' }}>
-            <Toolbar>
-                <Box display="flex" justifyContent="center" >
-                    <Stack direction="row" spacing={2}> 
+            <Toolbar sx={{m: 3}}>
+                <Box display="flex" flexDirection="column" alignItems="center" style={{ height: '100%', width: '100%' }}>
+                    <Stack direction="row"
+                        divider={
+                            <Divider 
+                            orientation="vertical" 
+                            flexItem />}
+                        spacing={2}
+                        justifyContent="center"
+                        > 
                         <Item>
                             <Link to="/searchResult">
                                 <Stack direction="column" > 
