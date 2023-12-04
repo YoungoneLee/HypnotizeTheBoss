@@ -67,7 +67,7 @@ const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, setChecked, t
                         onChange={handleTillPresentChange}
                         />
                     <Stack direction="row" spacing={1} alignItems="center">
-                        <Typography>Fastest</Typography>
+                        <Typography>Most Recent Submissions</Typography>
                         <ThemeProvider theme={theme}>
                             <Switch
                                 color="neutral"
@@ -78,7 +78,7 @@ const SubmissionPicker = ({setFromDate, setToDate, setTillPresent, setChecked, t
                                 onChange={handleCheckChange}
                                 />
                         </ThemeProvider>
-                        <Typography>Slowest</Typography>
+                        <Typography>Oldest Submissions</Typography>
                     </Stack>
                 </FormGroup>
             </Stack>
