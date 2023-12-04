@@ -7,7 +7,9 @@ const SubmitHeaderButton = ({username, gamename, type, runtime, fromDate, toDate
 
     const onSubmitForm = async() => {
         try {
-            const queryString = `?gamename=${encodeURIComponent(gamename)}&type=${encodeURIComponent(type)}&username=${encodeURIComponent(username)}&runtime=${encodeURIComponent(runtime)}`;
+            // console.log("username: " + username);
+            // &username=${encodeURIComponent(username)}
+            const queryString = `?gamename=${encodeURIComponent(gamename)}&type=${encodeURIComponent(type)}&runtime=${encodeURIComponent(runtime)}&username=${encodeURIComponent(username)}`;
             const response = await fetch(`http://localhost:3000/getSearchbarRuns${queryString}`);
             const jsonData = await response.json();
 

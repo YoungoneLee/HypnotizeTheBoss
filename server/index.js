@@ -368,11 +368,28 @@ app.get('/getRunData', async (req, res) => {
 //getSearchbarRuns
 app.get('/getSearchbarRuns', async (req, res) => {
   // Extract the parameters from the query string
-  const { gamename, type, runtime } = req.query;
+  const { username, gamename, type, runtime } = req.query;
+  
+  await pool.query(`
+    CREATE OR REPLACE VIEW omegatable AS
+    SELECT runner.runnerid, runner.username, 
+      run.runid, run.vod, run.runtime, run.type, 
+      game.gamename, game.genre, game.releaseyear, 
+      submits.submissionid, submits.time, submits.date
+    FROM run, runner, game, submits
+    WHERE run.runid = submits.runid 
+      AND submits.runnerid = runner.runnerid
+      AND run.gamename = game.gamename`)
+  
+  //   console.log("omegatable: " + omegatable.toString());
 
   // Build the SQL query dynamically based on the presence of optional parameters
-  let queryString = 'SELECT * FROM run';
+  let queryString = 'SELECT * FROM omegatable';
   const queryParams = [];
+
+  if (username) {
+    queryParams.push(`username ILIKE'${username}%'`);
+  }
 
   if (gamename) {
     queryParams.push(`gamename ILIKE '${gamename}%'`);
@@ -383,8 +400,6 @@ app.get('/getSearchbarRuns', async (req, res) => {
   }
 
   if (runtime) {
-    // Assuming the runtime is stored as TIME, you may need to adjust the condition accordingly
-    //00:${maxRuntime}:00
     queryParams.push(`runtime < TIME '${runtime}'`);
   }
 
@@ -394,6 +409,7 @@ app.get('/getSearchbarRuns', async (req, res) => {
 
   try {
     const data = await pool.query(queryString);
+    console.log("data: " + data.toString());
     res.status(200).json(data.rows);
   } catch (error) {
     console.error(error);
