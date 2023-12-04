@@ -32,7 +32,7 @@ const ReusableListRuns = ({ columns, data }) => {
                   </TableCell>
                 ))}
                 <Stack>
-                  <SimilarRunButton/>
+                  <SimilarRunButton row={row}/>
                   <EditRunButton/>
                 </Stack>
               </TableRow>
