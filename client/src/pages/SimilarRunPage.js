@@ -1,11 +1,21 @@
 import React, { useContext } from 'react';
-import { Button } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import TableContainer from '@mui/material/TableContainer';
+import Table from '@mui/material/Table';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import TableBody from '@mui/material/TableBody';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import RunContext from '../components/RunContext';
 import Container from '@mui/material/Container';
 import Header from '../components/Header'
 import ReusableListRuns from '../components/ReusableListRuns';
+import Typography from '@mui/material/Typography';
+import DeleteRunButton from '../components/DeleteButton';
+import EditRunButton from '../components/EditRunButton';
+
 
 const SimilarRunPage = () => {
     const { similarRunsResults = [], rowData } = useContext(RunContext);
@@ -28,23 +38,39 @@ const SimilarRunPage = () => {
     return(
         <>
           <Header title="similar run page"/>
-          <h1> Chosen Run </h1>
+          <Typography gutterBottom variant="h4" component="div" sx={{ m: 2}}>
+            Chosen Run
+          </Typography>
     
           <CssBaseline />
-          <Container sx={{ bgcolor: '#cfe8fc', height: 'fit-content', marginTop: '10px'}}>
+            <Container sx={{ height: 'fit-content', marginLeft: '5px', marginBottom: '10px'}}>
             {rowData ? (
-              Object.entries(rowData).map(([key, value], index) => (
-                <h1 key={index}>{key}: {value}</h1>
-              ))
+              <TableContainer component={Paper} sx={{backgroundColor: '#cfe8fc', marginTop: '20px'}}>
+                <Table sx={{ minWidth: 630 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      {Object.keys(rowData).map((key, index) => (
+                        <TableCell key={index} sx={{ fontWeight: 'bold' }}>{key}</TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                      {Object.values(rowData).map((value, index) => (
+                        <TableCell key={index}>{value}</TableCell>
+                      ))}
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
             ) : (
-              <h1>Loading...</h1>
+              <Typography variant="h6">Loading...</Typography>
             )}
-            <Box display="flex" justifyContent="center" >
-                <Button className="deleteRunButton"> Delete This Run </Button>
-            </Box>
+              <Box display="flex" justifyContent="left" sx={{m: '10px'}}>
+                <DeleteRunButton rowData={rowData}/>
+                <EditRunButton/>
+              </Box>
           </Container>
-    
-          <h1> More runs like this: </h1>
           <ReusableListRuns data={formattedSimilarRuns} columns={columns} />
         </>
       );

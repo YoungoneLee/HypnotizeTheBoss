@@ -16,7 +16,7 @@ const ReusableListRuns = ({ columns, data }) => {
 
   return (
     <Fragment>
-      <TableContainer component={Paper} sx={{backgroundColor: '#ece6fc', marginTop: '20px'}}>
+      <TableContainer component={Paper} sx={{backgroundColor: '#ece6fc', margin: '10px'}}>
         <Table sx={{ minWidth: 630 }} aria-label="simple table">
           <TableHead>
             <TableRow>

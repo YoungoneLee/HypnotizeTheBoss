@@ -4,7 +4,6 @@ import './App.css';
 import RunContext from './components/RunContext';
 
 //pages
-import Home from './pages/Home';
 import About from './pages/About';
 import RunSubmitPage from './pages/RunSubmitPage';
 import SearchResult from './pages/SearchResult';
@@ -28,7 +27,6 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route index element={<About />} /> 
-        <Route path="/home" element={<Home/>}/>
         <Route path="/about" element={<About/>}/>
         <Route path="/similarRuns" element={<SimilarRuns/>}/>
         <Route path="/submit" element={<RunSubmitPage/>}/>

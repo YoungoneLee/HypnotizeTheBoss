@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReusableListRuns from "../components/ReusableListRuns"
 import WaddleDeeHeader from "../components/WaddleDeeBar"
 import Typography from '@mui/material/Typography';
+import PageTextField from "../components/PageTextField";
 
 export default function About(){
 
@@ -49,12 +50,10 @@ export default function About(){
     return(
         <>
             <WaddleDeeHeader/>
-            <Typography gutterBottom variant="h4" component="div" sx={{ m: 2}}>
-              Runs of the day
-            </Typography>
-            <Typography color="text.secondary" variant="body2" sx={{ m: 2}}>
-                These are random runs from our database, click on one you find interesting to see similar runs.
-            </Typography>
+            <PageTextField 
+                title={"Runs of the day"}
+                body={"These are random runs from our database, click on one you find interesting to see similar runs."}
+                />
             <ReusableListRuns data={formattedAllRuns} columns={columns} sx={{m : 3}}/>
         </>
     )
