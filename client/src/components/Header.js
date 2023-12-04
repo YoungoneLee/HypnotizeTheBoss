@@ -1,6 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import { AppBar, Toolbar, Box } from '@mui/material';
-import Logo from '../images/waddlesleep.png'; // replace with your logo path
+// import Logo from '../images/waddlesleep.png'; // replace with your logo path
+import Logo from '../images/transparentwaddledee.png'
 import './Header.css'; // import the CSS file
 import RunnerSearchBar from './RunnerSearchBar';
 import GameSearchBar from './GameSearchBar';
@@ -24,7 +25,6 @@ export default function Header() {
         <AppBar position="static" sx={{ backgroundColor: '#8db594' }}>
             <Toolbar>
                 <img src={Logo} alt="logo" className="logo" />
-
                 <Fragment>
                     <RunnerSearchBar setUsername={setUsername}/>
                     <GameSearchBar setGamename={setGamename}/>

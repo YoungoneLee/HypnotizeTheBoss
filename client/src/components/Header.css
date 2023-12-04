@@ -7,3 +7,14 @@
     background-color: green !important;
     color: white !important;
 }
+
+.similarRunButton {
+    background-color: rgb(39, 101, 162) !important;
+    color: white !important;
+}
+
+.editRunButton {
+    background-color: rgb(110, 71, 131) !important;
+    color: white !important;
+}
+
