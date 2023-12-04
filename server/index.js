@@ -353,7 +353,20 @@ app.get('/getRunData', async (req, res) => {
   console.log('GET request to /getRunData received');
 
   try {
-    const data = await pool.query('SELECT * FROM run');
+
+    // await pool.query(`
+    //   CREATE OR REPLACE VIEW omegatable AS
+    //   SELECT runner.runnerid, runner.username, 
+    //     run.runid, run.vod, run.runtime, run.type, 
+    //     game.gamename, game.genre, game.releaseyear, 
+    //     submits.submissionid, submits.time, submits.date
+    //   FROM run, runner, game, submits
+    //   WHERE run.runid = submits.runid 
+    //     AND submits.runnerid = runner.runnerid
+    //     AND run.gamename = game.gamename
+    // `)
+
+    const data = await pool.query('SELECT * FROM omegatable');
     // data.rows.forEach(row => {
     //   console.log(`RunID: ${row.runid}, VOD: ${row.vod}, Runtime: ${row.runtime}, CategoryID: ${row.categoryid}, GameName: ${row.gamename}`);
     // });

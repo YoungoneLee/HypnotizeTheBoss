@@ -1,9 +1,13 @@
-import { Button } from '@mui/material';
 import React, { useContext } from "react"; 
+import { Button } from '@mui/material';
 import RunContext from './RunContext';
+import { useNavigate } from 'react-router-dom';
+
 
 const SubmitHeaderButton = ({username, gamename, type, runtime, fromDate, toDate, tillPresent, checked}) => {
     const { setSearchbarRuns } = useContext(RunContext);
+    const navigate = useNavigate();
+
 
     const onSubmitForm = async() => {
         try {
@@ -21,11 +25,10 @@ const SubmitHeaderButton = ({username, gamename, type, runtime, fromDate, toDate
             if (Array.isArray(jsonData)) {
                 // Assuming setRuns is a function to update state or handle the data
                 setSearchbarRuns(jsonData);
-              } else {
-                console.error('Data fetched is not an array:', jsonData);
-              }
-
-
+                navigate("/searchResult"); // navigate to SearchResults page
+            } else {
+            console.error('Data fetched is not an array:', jsonData);
+            }
         } catch (err) {
             console.log(err.message);
         }

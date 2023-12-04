@@ -2,10 +2,7 @@ import React, { Fragment, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import './RunSubmitForm.css'; // Import the CSS file
-// import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import dayjs from 'dayjs';
+import './RunSubmitForm.css'; 
 
 const UserForm = () => {
     const [vodLink, setVodLink] = useState('');
@@ -47,67 +44,67 @@ const UserForm = () => {
   return (
     <Fragment>
     <div className="container">
-      <Paper elevation={3} className="form-container">
-        <form onSubmit={handleSubmit}>
+        <Paper elevation={3} className="form-container" sx={{mt: 10}}>
+          <form onSubmit={handleSubmit}>
 
-        <TextField
-            label="VOD link"
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            className="form-field"
-            value={vodLink}
-            onChange={(e) => setVodLink(e.target.value)}
+          <TextField
+              label="VOD link"
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              className="form-field"
+              value={vodLink}
+              onChange={(e) => setVodLink(e.target.value)}
+            />
+
+          <TextField
+              label="Run time"
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              className="form-field"
+              value={runTime}
+              onChange={(e) => setRuntime(e.target.value)}
+            />
+
+          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <TimePicker
+              fullWidth
+              margin="normal"
+              sx={{ width: '100%' }}
+              label="Run time"
+              views={['hours', 'minutes', 'seconds']}
+              format="hh:mm:ss"
+              ampm={false}
+              className="form-field"
+              value={runTime || '00:00:00'}
+              onChange={(e) => setRuntime(e.target.value)}
+            />
+          </LocalizationProvider> */}
+
+          <TextField
+              label="Category type"
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              className="form-field"
+              value={type}
+              onChange={(e) => setCategoryType(e.target.value)}
           />
 
-        <TextField
-            label="Run time"
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            className="form-field"
-            value={runTime}
-            onChange={(e) => setRuntime(e.target.value)}
+          <TextField
+              label="Game name"
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              className="form-field"
+              value={gameName}
+              onChange={(e) => setGameName(e.target.value)}
           />
-
-        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <TimePicker
-            fullWidth
-            margin="normal"
-            sx={{ width: '100%' }}
-            label="Run time"
-            views={['hours', 'minutes', 'seconds']}
-            format="hh:mm:ss"
-            ampm={false}
-            className="form-field"
-            value={runTime || '00:00:00'}
-            onChange={(e) => setRuntime(e.target.value)}
-          />
-        </LocalizationProvider> */}
-
-        <TextField
-            label="Category type"
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            className="form-field"
-            value={type}
-            onChange={(e) => setCategoryType(e.target.value)}
-        />
-
-        <TextField
-            label="Game name"
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            className="form-field"
-            value={gameName}
-            onChange={(e) => setGameName(e.target.value)}
-        />
-          <Button type="submit" variant="contained" color="primary" fullWidth className="submit-button">
-            Submit
-          </Button>
-        </form>
+            <Button type="submit" variant="contained" color="primary" fullWidth className="submit-button">
+              Submit
+            </Button>
+          </form>
       </Paper>
     </div>
     </Fragment>
