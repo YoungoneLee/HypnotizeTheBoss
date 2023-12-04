@@ -1,5 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import { AppBar, Toolbar, Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 // import Logo from '../images/waddlesleep.png'; // replace with your logo path
 import Logo from '../images/transparentwaddledee.png'
 import './Header.css'; // import the CSS file
@@ -24,16 +25,17 @@ export default function Header() {
     return (
         <AppBar position="static" sx={{ backgroundColor: '#8db594' }}>
             <Toolbar>
+                <Link to="/about">
                 <img src={Logo} alt="logo" className="logo" />
-                <Fragment>
-                    <RunnerSearchBar setUsername={setUsername}/>
-                    <GameSearchBar setGamename={setGamename}/>
-                    <CategorySearchBar setCategory={setCategory}/>
-                    <RuntimeDropdown setRuntime={setRuntime} runtime={runtime}/>
-                    <SubmissionPicker setFromDate={setFromDate} setToDate={setToDate} setTillPresent={setTillPresent} setChecked={setChecked} fromDate={fromDate} toDate={toDate} tillPresent={tillPresent} checked={checked} />
-                    <SubmitHeaderButton username={username} gamename ={gamename} runtime={runtime} type={type} fromDate={fromDate} toDate={toDate} tillPresent={tillPresent} checked={checked}/>
-                </Fragment>
-
+                </Link>                
+            <Fragment>
+                <RunnerSearchBar setUsername={setUsername}/>
+                <GameSearchBar setGamename={setGamename}/>
+                <CategorySearchBar setCategory={setCategory}/>
+                <RuntimeDropdown setRuntime={setRuntime} runtime={runtime}/>
+                <SubmissionPicker setFromDate={setFromDate} setToDate={setToDate} setTillPresent={setTillPresent} setChecked={setChecked} fromDate={fromDate} toDate={toDate} tillPresent={tillPresent} checked={checked} />
+                <SubmitHeaderButton username={username} gamename ={gamename} runtime={runtime} type={type} fromDate={fromDate} toDate={toDate} tillPresent={tillPresent} checked={checked}/>
+            </Fragment>
                 <Box sx={{ flexGrow: 1 }} />
             </Toolbar>
         </AppBar>

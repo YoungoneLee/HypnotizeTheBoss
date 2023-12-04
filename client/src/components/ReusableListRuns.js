@@ -11,6 +11,8 @@ import SimilarRunButton from "./SimilarRunButton";
 import EditRunButton from "./EditRunButton";
 
 const ReusableListRuns = ({ columns, data }) => {
+  console.log('columns:', columns);
+  console.log('data:', data);
 
   return (
     <Fragment>

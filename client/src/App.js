@@ -14,10 +14,14 @@ import SimilarRuns from './pages/SimilarRunPage';
 function App() {
 
   const [searchbarRuns, setSearchbarRuns] = useState([]);
+  const [similarRunsResults, setSimilarRuns] = useState([]);
+  const [rowData, setRowData] = useState(null);
+
+
 
   return (
     <div>
-      <RunContext.Provider value={{ searchbarRuns, setSearchbarRuns}}>
+    <RunContext.Provider value={{ searchbarRuns, setSearchbarRuns, similarRunsResults, setSimilarRuns, rowData, setRowData}}>
       <div>
       <BrowserRouter>
       <Routes>

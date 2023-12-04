@@ -1,11 +1,7 @@
-import Header from '../components/Header';
-import ListGames from '../components/ListData';
+import WaddleDeeHeader from "../components/WaddleDeeBar"
 
 export default function About(){
     return(
-        <>
-            <Header title="About"/>
-            <ListGames/>
-        </>
+        <WaddleDeeHeader/>
     )
 }
