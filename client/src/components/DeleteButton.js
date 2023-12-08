@@ -18,20 +18,28 @@ const DeleteRunButton = ({rowData}) => {
     };
 
     const deleteRun = () => {
+     
         try {
-            setOpen(false);
-            body = {runid: rowData}
-            const response = fetch("http://localhost:3000/deleteRunData", {
+          setOpen(false);
+          const handleSubmit = async(e) => {
+            
+            const runid = rowData.runid;
+            //const body = {runid: rowData}
+            const queryString = `?runid=${encodeURIComponent(runid)}`; //?runid= deleted that part otu
+            const response = await fetch(`http://localhost:3000/deleteRunData/${queryString}`, {
               method: "POST", 
               headers: {"Content-Type": "application/json"},
-              param: JSON.stringify(body)
+              //param: JSON.stringify(body)
           })
-            //console.log("we can't technically delete our run because our run ids are all the same rn guh");
-            
+            console.log(response);
+        }
+        console.log("deleted");
+        console.log(handleSubmit);
         } catch (err) {
             console.log(err.message);
         }
     }
+  
 
     return(
         <div> 

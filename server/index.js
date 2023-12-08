@@ -451,9 +451,9 @@ app.get('/getSearchbarRuns', async (req, res) => {
 
 //wen
 //deletes both a run and the submit associated with it based on the runid of that run
-app.delete('/deleteRunData/:runid', async (req, res) => {
+app.delete('/deleteRunData', async (req, res) => { ///:runid
 const runid = req.params.runid;
-
+console.log("Run deleted");
 try {
   const results1 = await pool.query('DELETE FROM run WHERE runid = $1 RETURNING *', [runid]);
   const results2 = await pool.query('DELETE FROM submits WHERE runid = $1 RETURNING *', [runid]);
