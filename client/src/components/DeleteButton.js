@@ -20,7 +20,14 @@ const DeleteRunButton = ({rowData}) => {
     const deleteRun = () => {
         try {
             setOpen(false);
-            console.log("we can't technically delete our run because our run ids are all the same rn guh");
+            body = {runid: rowData}
+            const response = fetch("http://localhost:3000/deleteRunData", {
+              method: "POST", 
+              headers: {"Content-Type": "application/json"},
+              param: JSON.stringify(body)
+          })
+            //console.log("we can't technically delete our run because our run ids are all the same rn guh");
+            
         } catch (err) {
             console.log(err.message);
         }
