@@ -68,7 +68,7 @@ const SimilarRunPage = () => {
             )}
               <Box display="flex" justifyContent="left" sx={{m: '10px'}}>
                 <DeleteRunButton rowData={rowData}/>
-                <EditRunButton/>
+                <EditRunButton rowData={rowData}/>
               </Box>
           </Container>
           <ReusableListRuns data={formattedSimilarRuns} columns={columns} />

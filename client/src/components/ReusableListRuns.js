@@ -8,7 +8,6 @@ import TableBody from '@mui/material/TableBody';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/system/Stack';
 import SimilarRunButton from "./SimilarRunButton";
-import EditRunButton from "./EditRunButton";
 
 const ReusableListRuns = ({ columns, data }) => {
   console.log('columns:', columns);
@@ -35,7 +34,6 @@ const ReusableListRuns = ({ columns, data }) => {
                 ))}
                 <Stack>
                   <SimilarRunButton row={row}/>
-                  <EditRunButton/>
                 </Stack>
               </TableRow>
             ))}
