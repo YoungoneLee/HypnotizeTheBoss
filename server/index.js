@@ -155,7 +155,7 @@ app.get('/searchByCategory', async (req, res) => {
 //advanced function to get "more like this"
 app.get('/moreLikeThis', async (req, res) => {
   const runid = req.query.runid;
-  console.log('Original RunID:', runid);
+  // console.log('Original RunID:', runid);
   try {
 
     //get other variables used in queries
@@ -350,21 +350,21 @@ app.get('/getData', async (req, res) => {
 
 //wen
 app.get('/getRunData', async (req, res) => {
-  console.log('GET request to /getRunData received');
+  // console.log('GET request to /getRunData received');
 
   try {
 
-    // await pool.query(`
-    //   CREATE OR REPLACE VIEW omegatable AS
-    //   SELECT runner.runnerid, runner.username, 
-    //     run.runid, run.vod, run.runtime, run.type, 
-    //     game.gamename, game.genre, game.releaseyear, 
-    //     submits.submissionid, submits.time, submits.date
-    //   FROM run, runner, game, submits
-    //   WHERE run.runid = submits.runid 
-    //     AND submits.runnerid = runner.runnerid
-    //     AND run.gamename = game.gamename
-    // `)
+    await pool.query(`
+      CREATE OR REPLACE VIEW omegatable AS
+      SELECT runner.runnerid, runner.username, 
+        run.runid, run.vod, run.runtime, run.type, 
+        game.gamename, game.genre, game.releaseyear, 
+        submits.submissionid, submits.time, submits.date
+      FROM run, runner, game, submits
+      WHERE run.runid = submits.runid 
+        AND submits.runnerid = runner.runnerid
+        AND run.gamename = game.gamename
+    `)
 
     const data = await pool.query('SELECT * FROM omegatable');
     // data.rows.forEach(row => {
@@ -451,27 +451,27 @@ app.get('/getSearchbarRuns', async (req, res) => {
 
 //wen
 //deletes both a run and the submit associated with it based on the runid of that run
-app.delete('/deleteRunData/:runid', async (req, res) => {
-const runid = req.params.runid;
+app.delete('/deleteRunData/:runid', async (req, res) => { ///:runid
+  const runid = req.params.runid;
+  console.log("Run deleted");
+  try {
+    const results1 = await pool.query('DELETE FROM run WHERE runid = $1 RETURNING *', [runid]);
+    const results2 = await pool.query('DELETE FROM submits WHERE runid = $1 RETURNING *', [runid]);
 
-try {
-  const results1 = await pool.query('DELETE FROM run WHERE runid = $1 RETURNING *', [runid]);
-  const results2 = await pool.query('DELETE FROM submits WHERE runid = $1 RETURNING *', [runid]);
-
-  if ((results1.rows.length > 0) && (results2.rows.length > 0)) {
-    console.log(`Data with number ${runid} deleted successfully`);
-    res.status(200).json({ message: 'Data deleted successfully', 
-      deletedData1: results1.rows[0],
-      deletedData2: results2.rows[0] 
-    });
-  } else {
-    console.log(`No data found with runid ${runid}`);
-    res.status(404).json({ error: 'Data not found' });
+    if ((results1.rows.length > 0) && (results2.rows.length > 0)) {
+      console.log(`Data with number ${runid} deleted successfully`);
+      res.status(200).json({ message: 'Data deleted successfully', 
+        deletedData1: results1.rows[0],
+        deletedData2: results2.rows[0] 
+      });
+    } else {
+      console.log(`No data found with runid ${runid}`);
+      res.status(404).json({ error: 'Data not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
-} catch (error) {
-  console.error(error);
-  res.status(500).json({ error: 'Internal Server Error' });
-}
 });
 
 
@@ -662,7 +662,7 @@ app.put('/updateData/:number', async (req, res) => {
 app.put('/updateRunner/:username', async (req, res) => {
   const username = req.params.username;
   const { newUsername } = req.body;
-
+console.log(newUsername);
   try {
     const result = await pool.query('UPDATE runner SET username = $1 WHERE username = $2 RETURNING *', [newUsername, username]);
 

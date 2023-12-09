@@ -4,12 +4,10 @@ import RunContext from './RunContext';
 import { useNavigate } from 'react-router-dom';
 
 const SimilarRunButton = ({row}) => {
-    // const { setSimilarRuns } = useContext(RunContext);
     const { setSimilarRuns, setRowData } = useContext(RunContext);
     const navigate = useNavigate();
 
     const handleClick = async(e) => {
-        // e.preventDefault();
         console.log(row)
         setRowData(row);
         navigate("/similarRuns", {state: {row}}); // replace "/newPage" with the path you want to navigate to

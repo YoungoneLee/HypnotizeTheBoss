@@ -11,6 +11,7 @@ import NoPage from './pages/NoPage';
 import SimilarRuns from './pages/SimilarRunPage';
 import CategorySubmitPage from './pages/CategorySubmitPage';
 import GameSubmitPage from './pages/GameSubmitPage';
+import UpdateUsernamePage from './pages/UpdateUsername';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/submitCategory" element={<CategorySubmitPage/>}/>
         <Route path="/submitGame" element={<GameSubmitPage/>}/>
         <Route path="/searchResult" element={<SearchResult/>}/>
+        <Route path="/updateUsername" element={<UpdateUsernamePage/>}/>
         <Route path="*" element={<NoPage/>}/>
       </Routes>
       </BrowserRouter>
